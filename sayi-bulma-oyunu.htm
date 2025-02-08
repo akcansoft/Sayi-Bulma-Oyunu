@@ -7,19 +7,54 @@
   <title>Sayı Bulma Oyunu</title>
   <style>
     body {
-      font-family: 'Comic Sans MS', 'Comic Sans', 'Arial', 'Helvetica', 'sans-serif';
+      /* Genel sayfa stilleri */
+      font-family: 'Comic Sans MS', 'Tahoma', 'Helvetica', 'sans-serif';
       text-align: center;
       margin-top: 30px;
-      background-color: #f9f9f9;
+      background: #fcf5f5;
+    }
+
+    hr {
+      /* Ayırıcı çizgi için genel stiller */
+      border: 1px solid #ccc;
+      width: 25%;
+      height: 1px;
+      background-color: gray;
+      border: none;
+      margin-top: 20px
+    }
+
+    a {
+      /* Linkler için genel stiller */
+      font-size: 12px;
+      color: #777;
+      text-decoration: none;
+      display: block;
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    a:hover {
+      /* Linklerin üzerine gelindiğinde özel stiller */
+      color: #790101;
     }
 
     h1 {
+      /* Başlık için genel stiller */
       font-size: 60px;
       color: #ff00d4;
       font-weight: bold;
-      text-shadow: 4px 4px 7px rgba(0, 0, 0, 0.5);
-      -webkit-text-stroke: 2px #770063;
+      text-shadow:
+        -1px -1px 0 #770063,
+        1px -1px 0 #770063,
+        -1px 1px 0 #770063,
+        1px 1px 0 #770063,
+        4px 4px 7px rgba(0, 0, 0, 0.5); /* Gölge rengi */
       animation: jump 0.5s ease 1;
+    }
+
+    h2 {
+      color: #ff00d4;
     }
 
     @keyframes jump {
@@ -35,40 +70,51 @@
     }
 
     .grid {
+      /* Kutuların genel stil ayarları */
       display: grid;
       grid-template-columns: repeat(3, 105px);
       grid-gap: 15px;
       justify-content: center;
-      margin: 10px; /*auto;*/
+      margin: 10px;
+      /*auto;*/
     }
 
     .grid div {
+      /* Kutular için genel stiller */
       width: 100px;
       height: 100px;
       display: flex;
+      /* İçeriği yatay ve dikey ortala */
       align-items: center;
+      /* Kutu içindeki metni dikey ortala */
       justify-content: center;
+      /* Kutu içindeki metni ortala */
       font-size: 30px;
       font-weight: bold;
       color: #fff;
       border-radius: 50%;
       cursor: pointer;
       transition: all 0.3s ease;
+      /* Geçiş efektleri */
       box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3),
         inset -4px -4px 8px rgba(0, 0, 0, 0.2),
         inset 4px 4px 8px rgba(255, 255, 255, 0.2);
       background: linear-gradient(135deg, #ff7f7f, #d9534f);
       transform: scale(0);
+      /* Kutuların küçük başlaması için */
       animation: appear 0.5s ease forwards;
+      /* Kutuların belirginleşmesi için animasyon */
     }
 
     @keyframes appear {
       to {
         transform: scale(1);
+        /* Kutuların büyümesi */
       }
     }
 
     .grid div:hover:not(.disabled) {
+      /* Kutuların üzerine gelindiğinde özel stiller */
       transform: scale(1.2) !important;
       font-size: 60px;
       background: linear-gradient(145deg, #00DD00, #1f7a3a);
@@ -79,6 +125,7 @@
     }
 
     .grid div.correct {
+      /* Doğru cevaplar için özel stiller */
       background: linear-gradient(145deg, #00DD00, #1f7a3a);
       font-size: 60px;
       transform: scale(1.2);
@@ -87,29 +134,34 @@
     }
 
     .grid div.wrong {
+      /* Yanlış cevaplar için özel stiller */
       background: linear-gradient(145deg, #e2e2e2, #6b6b6b);
       color: black;
       cursor: default;
     }
 
     .grid div.disabled {
+      /* Seçim yapıldıktan sonra kutuların üzerine tıklanmasını engellemek için */
       pointer-events: none;
     }
 
     .message {
-      margin-top: 5px; 
+      /* Mesajlar için genel stiller */
+      margin-top: 5px;
       font-size: 24px;
       font-weight: bold;
-      color: #4caf50;
+      color: #299b2d;
       animation: fadeIn 1s;
     }
 
     .message.error {
-      color: #ff0000 !important;
-      /* Kırmızı renk */
+      /* Hata mesajı için özel stiller */
+      color: #c20808 !important;
     }
 
     @keyframes fadeIn {
+
+      /* Mesajların belirginleşmesi için animasyon */
       from {
         opacity: 0;
       }
@@ -120,6 +172,7 @@
     }
 
     button {
+      /* Butonlar için genel stiller */
       margin-top: 10px;
       padding: 15px 30px;
       font-size: 20px;
@@ -134,18 +187,21 @@
     }
 
     button:hover {
+      /* Butonun üzerine gelindiğindeki özel stiller */
       background-color: #3e8e41;
       transform: scale(1.1);
       box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
     }
 
     button:disabled {
+      /* Devre dışı bırakılmış butonlar için özel stiller */
       background-color: #ccc;
       cursor: not-allowed;
       box-shadow: none;
     }
 
     #summary {
+      /* Oyun sonu tablosu için özel stiller */
       margin-top: 10px;
       font-size: 24px;
       color: #333;
@@ -153,6 +209,8 @@
     }
 
     @keyframes slideIn {
+
+      /* Tablonun belirginleşmesi için animasyon */
       from {
         transform: translateY(20px);
         opacity: 0;
@@ -165,6 +223,7 @@
     }
 
     .button-container {
+      /* Butonlar için özel stiller */
       display: flex;
       justify-content: center;
       gap: 10px;
@@ -172,15 +231,59 @@
     }
 
     .question {
+      /* Soru metni için özel stiller */
       font-size: 28px;
-      color: #333;
+      color: #004e61;
       animation: fadeIn 2s;
     }
 
     #restartButton:hover {
+      /* Yeni Oyun butonu için özel stiller */
       background-color: #007bff;
       transform: scale(1.1);
       box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Tablo Stilleri */
+    .result-table {
+      /* Tablo için genel stiller */
+      width: 100%;
+      max-width: 400px;
+      margin: 5px auto;
+      border-collapse: collapse;
+      font-size: 20px;
+    }
+
+    .result-table th,
+    .result-table td {
+      /* Tablo başlıkları ve hücreleri için genel stiller */
+      padding: 3px;
+      border: 1px solid #ccc;
+    }
+
+    .result-table th {
+      /* Tablo başlıkları için özel stiller */
+      background-color: #82a778;
+      color: #fff;
+    }
+
+    .result-table td.success-rate {
+      /* Başarı oranı hücresi için özel stiller */
+      color: #4caf50;
+      font-weight: bold;
+    }
+
+    .result-table td.success-rate.low {
+      /* Başarı oranı düşükse kırmızı renk */
+      color: #ff6f61;
+    }
+
+    .result-message {
+      /* Sonuç mesajı için genel stiller */
+      font-size: 22px;
+      margin-top: 10px;
+      text-align: center;
+      color: #0076c5;
     }
   </style>
 </head>
@@ -197,24 +300,24 @@
   </div>
 
   <script>
-    let correctAnswers = 0;
-    let wrongAnswers = 0;
-    let questionCount = 0;
-    const totalQuestions = 9;
-    let isAnswered = false;
-    let usedNumbers = new Set();
+    const totalQuestions = 9; // Toplam soru sayısı
+    let correctAnswers = 0; // Doğru cevap sayısı
+    let wrongAnswers = 0; // Yanlış cevap sayısı
+    let questionCount = 0; // Soru sayısı
+    let isAnswered = false; // Soru cevaplandı mı?
+    let usedNumbers = new Set(); // Kullanılan sayılar
 
-    function generateQuestion() {
-      if (questionCount >= totalQuestions) {
-        showSummary();
+    function generateQuestion() { // Soru oluşturma fonksiyonu
+      if (questionCount >= totalQuestions) { // Soru sayısı tamamlandıysa
+        showSummary(); // Sonuç tablosunu göster
         return;
       }
 
-      let correctNumber;
-      do {
-        correctNumber = Math.floor(Math.random() * 9) + 1;
-      } while (usedNumbers.has(correctNumber));
-      usedNumbers.add(correctNumber);
+      let correctNumber; // Doğru cevap
+      do { // Rastgele bir sayı seç
+        correctNumber = Math.floor(Math.random() * 9) + 1; // 1-9 arasında rastgele bir sayı seç
+      } while (usedNumbers.has(correctNumber)); // Daha önce kullanılmışsa tekrar seç
+      usedNumbers.add(correctNumber); // Kullanılan sayıları kaydet
 
       const numbers = Array.from({ length: 9 }, (_, i) => i + 1).sort(() => Math.random() - 0.5);
 
@@ -233,10 +336,10 @@
         grid.appendChild(div);
       });
 
-      questionCount++;
+      questionCount++; // Soru sayısını artır
     }
 
-    function checkAnswer(selectedNumber, correctNumber, div) {
+    function checkAnswer(selectedNumber, correctNumber, div) { // Cevap kontrol fonksiyonu
       if (isAnswered) return;
 
       const messageElement = document.getElementById('message');
@@ -253,7 +356,7 @@
         wrongAnswers++;
         div.classList.add('wrong');
       }
-      
+
       if (questionCount === totalQuestions) {
         showSummary();
       }
@@ -268,7 +371,7 @@
 
     }
 
-    function showSummary() {
+    function showSummary() { // Sonuç tablosunu gösterme fonksiyonu
       const successRate = (correctAnswers / totalQuestions) * 100;
       let message = '';
       if (successRate >= 90) {
@@ -279,47 +382,49 @@
         message = 'Daha fazla pratik yapmalısınız. 😊';
       }
 
+      const successRateClass = successRate >= 50 ? 'success-rate' : 'success-rate low';
+
       document.getElementById('summary').innerHTML = `
     <h2>Oyun Bitti! 🏆</h2>
-    <table style="width: 100%; max-width: 400px; margin: 5px auto; border-collapse: collapse; font-size: 20px;">
+    <table class="result-table">
       <tr>
-        <th style="padding: 5px; border: 1px solid #ccc; background-color: #f9f9f9;">Kategori</th>
-        <th style="padding: 5px; border: 1px solid #ccc; background-color: #f9f9f9;">Değer</th>
+        <th>Kategori</th>
+        <th>Değer</th>
       </tr>
       <tr>
-        <td style="padding: 5px; border: 1px solid #ccc;">Soru Sayısı</td>
-        <td style="padding: 5px; border: 1px solid #ccc;">${totalQuestions}</td>
+        <td>Soru Sayısı</td>
+        <td>${totalQuestions}</td>
       </tr>
       <tr>
-        <td style="padding: 5px; border: 1px solid #ccc;">Doğru Cevap Sayısı</td>
-        <td style="padding: 5px; border: 1px solid #ccc;">${correctAnswers}</td>
+        <td>Doğru Cevap Sayısı</td>
+        <td>${correctAnswers}</td>
       </tr>
       <tr>
-        <td style="padding: 5px; border: 1px solid #ccc;">Yanlış Cevap Sayısı</td>
-        <td style="padding: 5px; border: 1px solid #ccc;">${wrongAnswers}</td>
+        <td>Yanlış Cevap Sayısı</td>
+        <td>${wrongAnswers}</td>
       </tr>
       <tr>
-        <td style="padding: 5px; border: 1px solid #ccc;">Başarı Oranı</td>
-        <td style="padding: 5px; border: 1px solid #ccc; color: ${successRate >= 50 ? '#4caf50' : '#ff6f61'}; font-weight: bold;">${successRate.toFixed(2)}%</td>
+        <td>Başarı Oranı</td>
+        <td class="${successRateClass}">${successRate.toFixed(2)}%</td>
       </tr>
     </table>
-    <p style="font-size: 24px; margin-top: 10px;">${message}</p>
+    <p class="result-message">${message}</p>
   `;
       document.getElementById('nextButton').style.display = 'none';
       document.getElementById('restartButton').style.display = 'block';
     }
 
-    function numberToWord(num) {
+    function numberToWord(num) { // Sayıyı metne çevirme fonksiyonu
       const words = ['bir', 'iki', 'üç', 'dört', 'beş', 'altı', 'yedi', 'sekiz', 'dokuz'];
       return words[num - 1];
     }
 
-    function getSuffix(num) {
+    function getSuffix(num) { // Sayıya göre ek getirme fonksiyonu
       const suffixes = { 3: 'tür', 4: 'tür', 5: 'tir', 6: 'dır', 9: 'dur' };
       return suffixes[num] || 'dir';
     }
 
-    function restartGame() {
+    function restartGame() { // Oyunu yeniden başlatma fonksiyonu
       correctAnswers = 0;
       wrongAnswers = 0;
       questionCount = 0;
@@ -333,11 +438,11 @@
     document.getElementById('nextButton').addEventListener('click', generateQuestion);
     document.getElementById('restartButton').addEventListener('click', restartGame);
 
-    generateQuestion();
+    generateQuestion(); // Oyunu başlat
   </script>
-  <hr style="width:25%; height:1px; background-color:gray; border:none; margin-top:20px">
-  <a style="font-size: 0.7em; text-decoration: none;" href="https://mesutakcan.blogspot.com">©2025 Mesut Akcan</a>
-  <!-- v22 -->
+  <hr>
+  <a href="https://mesutakcan.blogspot.com">©2025 Mesut Akcan</a>
+  <!-- v23 -->
 </body>
 
 </html>
