@@ -7,7 +7,7 @@
   <title>Sayı Bulma Oyunu</title>
   <style>
     body {
-      font-family: 'Comic Sans MS', cursive, sans-serif;
+      font-family: 'Comic Sans MS', 'Comic Sans', 'Arial', 'Helvetica', cursive, sans-serif;
       text-align: center;
       margin-top: 50px;
       background-color: #f9f9f9;
@@ -269,13 +269,23 @@
 
     function showSummary() {
       const successRate = (correctAnswers / totalQuestions) * 100;
+      let message = '';
+      if (successRate >= 90) {
+        message = 'Harika bir performans! 🏅';
+      } else if (successRate >= 50) {
+        message = 'İyi iş çıkardınız! 🎯';
+      } else {
+        message = 'Daha fazla pratik yapmalısınız. 😊';
+      }
+
       document.getElementById('summary').innerHTML = `
-        <h2>Oyun Bitti! 🏆</h2>
-        <p>Soru Sayısı: ${totalQuestions}</p>
-        <p>Doğru Cevap Sayısı: ${correctAnswers}</p>
-        <p>Yanlış Cevap Sayısı: ${wrongAnswers}</p>
-        <p style="font-size: 32px; color: ${successRate >= 50 ? '#4caf50' : '#ff6f61'}; font-weight: bold;">Başarı Oranı: ${successRate.toFixed(2)}%</p>
-      `;
+    <h2>Oyun Bitti! 🏆</h2>
+    <p>Soru Sayısı: ${totalQuestions}</p>
+    <p>Doğru Cevap Sayısı: ${correctAnswers}</p>
+    <p>Yanlış Cevap Sayısı: ${wrongAnswers}</p>
+    <p style="font-size: 32px; color: ${successRate >= 50 ? '#4caf50' : '#ff6f61'}; font-weight: bold;">Başarı Oranı: ${successRate.toFixed(2)}%</p>
+    <p style="font-size: 24px; margin-top: 10px;">${message}</p>
+  `;
       document.getElementById('nextButton').style.display = 'none';
       document.getElementById('restartButton').style.display = 'block';
     }
@@ -306,8 +316,9 @@
 
     generateQuestion();
   </script>
-<hr><a href="https://mesutakcan.blogspot.com">©2025 Mesut Akcan</a>
-<!-- v20 -->
+  <hr style="width:30%; height:1px; background-color:gray; border:none;">
+  <a style="font-size: 0.8em; text-decoration: none;" href="https://mesutakcan.blogspot.com">©2025 Mesut Akcan</a>
+  <!-- v21 -->
 </body>
 
 </html>
