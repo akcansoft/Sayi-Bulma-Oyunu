@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eğlenceli Sayı Oyunu</title>
+    <title>Eğlenceli Sayı Bulma Oyunu</title>
     <style>
         body {
             font-family: 'Comic Sans MS', cursive, sans-serif;
@@ -39,11 +39,21 @@
             background-color: #ff6f61;
             border-radius: 20px;
             cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s;
+            transition: transform 0.2s, background-color 0.2s, font-size 0.2s;
         }
-        .grid div:hover {
-            transform: scale(1.1);
-            background-color: #ff3b2f;
+        .grid div.correct {
+            background-color: #00DD00;
+            font-size: 45px;
+            transform: scale(1.2);
+            cursor: default;
+        }
+        .grid div.wrong {
+            background-color: #ccc;
+            color: #000;
+            cursor: default;
+        }
+        .grid div.disabled {
+            pointer-events: none;
         }
         .message {
             margin-top: 20px;
@@ -70,7 +80,7 @@
         }
         button:hover {
             background-color: #45a049;
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
         button:disabled {
             background-color: #ccc;
@@ -95,7 +105,7 @@
     </style>
 </head>
 <body>
-    <h1>Eğlenceli Sayı Oyunu</h1>
+    <h1>Eğlenceli Sayı Bulma Oyunu</h1>
     <div id="question" style="font-size: 28px; color: #333; animation: fadeIn 1s;"></div>
     <div class="grid" id="grid"></div>
     <div class="message" id="message"></div>
@@ -127,7 +137,7 @@
 
             const numbers = Array.from({ length: 9 }, (_, i) => i + 1).sort(() => Math.random() - 0.5);
 
-            document.getElementById('question').innerText = `Aşağıdaki rakamlardan hangisi '${numberToWord(correctNumber)}'${getSuffix(correctNumber)}?`;
+            document.getElementById('question').innerText = `${questionCount + 1}- Aşağıdaki rakamlardan hangisi '${numberToWord(correctNumber)}'${getSuffix(correctNumber)}?`;
             document.getElementById('message').innerText = '';
             document.getElementById('nextButton').disabled = true;
             isAnswered = false;
@@ -137,25 +147,33 @@
             numbers.forEach(num => {
                 const div = document.createElement('div');
                 div.innerText = num;
-                div.addEventListener('click', () => checkAnswer(num, correctNumber));
+                div.addEventListener('click', () => checkAnswer(num, correctNumber, div));
                 grid.appendChild(div);
             });
 
             questionCount++;
         }
 
-        function checkAnswer(selectedNumber, correctNumber) {
+        function checkAnswer(selectedNumber, correctNumber, div) {
             if (isAnswered) return;
 
             if (selectedNumber === correctNumber) {
                 document.getElementById('message').innerText = 'Bildiniz. Tebrikler 🎉';
                 correctAnswers++;
+                div.classList.add('correct');
             } else {
                 document.getElementById('message').innerText = 'Bilemediniz, daha dikkatli olun 😊';
                 wrongAnswers++;
+                div.classList.add('wrong');
             }
             isAnswered = true;
             document.getElementById('nextButton').disabled = false;
+
+            // Tüm kutuları devre dışı bırak
+            const gridItems = document.querySelectorAll('.grid div');
+            gridItems.forEach(item => {
+                item.classList.add('disabled');
+            });
         }
 
         function showSummary() {
@@ -198,6 +216,6 @@
         generateQuestion();
     </script>
 <hr><a href="https://mesutakcan.blogspot.com">©2025 Mesut Akcan</a>
-<!-- v4 -->
+<!-- v5 -->
 </body>
 </html>
