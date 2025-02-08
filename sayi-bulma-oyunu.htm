@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="tr">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,12 +22,8 @@
     }
 
     @keyframes jump {
-      0%, 100% {
-        transform: translateY(0) scale(1.2);
-      }
-      50% {
-        transform: translateY(-20px) scale(1.2);
-      }
+      0%, 100% { transform: translateY(0) scale(1.2); }
+      50% { transform: translateY(-20px) scale(1.2); }
     }
 
     .grid {
@@ -50,16 +45,21 @@
       color: #fff;
       border-radius: 20px;
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+      transition: all 0.3s ease;
       box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3),
-        inset -4px -4px 8px rgba(0, 0, 0, 0.2),
-        inset 4px 4px 8px rgba(255, 255, 255, 0.2);
+                  inset -4px -4px 8px rgba(0, 0, 0, 0.2),
+                  inset 4px 4px 8px rgba(255, 255, 255, 0.2);
       background: linear-gradient(135deg, #ff7f7f, #d9534f);
-      transform-style: preserve-3d;
-      opacity: 1; /* Kutular başlangıçta görünür */
+      transform: scale(0);
+      animation: appear 0.5s ease forwards;
     }
 
-    /* Her kutu için farklı gecikme süreleri */
+    @keyframes appear {
+      to {
+        transform: scale(1);
+      }
+    }
+
     .grid div:nth-child(1) { animation-delay: 0.1s; }
     .grid div:nth-child(2) { animation-delay: 0.2s; }
     .grid div:nth-child(3) { animation-delay: 0.3s; }
@@ -68,15 +68,16 @@
     .grid div:nth-child(6) { animation-delay: 0.6s; }
     .grid div:nth-child(7) { animation-delay: 0.7s; }
     .grid div:nth-child(8) { animation-delay: 0.8s; }
-    .grid div:nth-child(9) { animation-delay: 0.9s; }    
+    .grid div:nth-child(9) { animation-delay: 0.9s; }
 
     .grid div:hover:not(.disabled) {
+      transform: scale(1.2) !important;
       font-size: 50px;
-      transform: scale(1.2);
       background: linear-gradient(145deg, #00DD00, #1f7a3a);
       box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.5),
-        inset -5px -5px 10px rgba(0, 0, 0, 0.3),
-        inset 5px 5px 10px rgba(255, 255, 255, 0.3);
+                  inset -5px -5px 10px rgba(0, 0, 0, 0.3),
+                  inset 5px 5px 10px rgba(255, 255, 255, 0.3);
+      z-index: 1;
     }
 
     .grid div.correct {
@@ -85,16 +86,12 @@
       transform: scale(1.2);
       cursor: default;
       animation: jump 0.5s ease-in-out;
-      box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.5),
-        inset -5px -5px 10px rgba(0, 0, 0, 0.3),
-        inset 5px 5px 10px rgba(255, 255, 255, 0.3);
     }
 
     .grid div.wrong {
       background: linear-gradient(145deg, #e2e2e2, #6b6b6b);
       color: black;
       cursor: default;
-      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
     }
 
     .grid div.disabled {
@@ -110,12 +107,8 @@
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     button {
@@ -128,7 +121,7 @@
       border: none;
       border-radius: 25px;
       cursor: pointer;
-      transition: background-color 0.3s, transform 0.3s;
+      transition: all 0.3s ease;
       box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
     }
 
@@ -152,14 +145,8 @@
     }
 
     @keyframes slideIn {
-      from {
-        transform: translateY(20px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
     }
 
     .button-container {
@@ -182,7 +169,6 @@
     }
   </style>
 </head>
-
 <body>
   <h1>Sayı Bulma Oyunu</h1>
   <div class="question" id="question"></div>
@@ -226,7 +212,6 @@
       numbers.forEach((num, index) => {
         const div = document.createElement('div');
         div.innerText = num;
-        div.style.transitionDelay = `${index * 0.1}s`; /* Her kutu için gecikme ayarı */
         div.addEventListener('click', () => checkAnswer(num, correctNumber, div));
         grid.appendChild(div);
       });
@@ -249,13 +234,11 @@
       isAnswered = true;
       document.getElementById('nextButton').disabled = false;
 
-      // Tüm kutuları devre dışı bırak
       const gridItems = document.querySelectorAll('.grid div');
       gridItems.forEach(item => {
         item.classList.add('disabled');
       });
 
-      // 9. soruya cevap verildiğinde direkt sonuçları göster
       if (questionCount === totalQuestions) {
         showSummary();
       }
@@ -301,7 +284,6 @@
     generateQuestion();
   </script>
 <hr><a href="https://mesutakcan.blogspot.com">©2025 Mesut Akcan</a>
-<!-- v17 -->
+<!-- v18 -->
 </body>
-
 </html>
