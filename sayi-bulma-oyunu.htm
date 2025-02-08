@@ -15,13 +15,11 @@
 
     h1 {
       font-size: 60px;
-      /* font-family:Verdana, Geneva, Tahoma, sans-serif; */
       color: #ff00d4;
       font-weight: bold;
       text-shadow: 4px 4px 7px rgba(0, 0, 0, 0.5);
       -webkit-text-stroke: 2px #770063;
       animation: jump 0.5s ease 1;
-      /* 1 kez çalışacak */
     }
 
     @keyframes jump {
@@ -45,9 +43,10 @@
     }
 
     .grid div {
+      /* display: flex; */
+      display: inline-block; /* veya block */
       width: 100px;
       height: 100px;
-      display: flex;
       align-items: center;
       justify-content: center;
       font-size: 30px;
@@ -61,19 +60,29 @@
         inset 4px 4px 8px rgba(255, 255, 255, 0.2);
       background: linear-gradient(135deg, #ff7f7f, #d9534f);
       transform-style: preserve-3d;
-      animation: appear 0.5s ease;
+
+      /* Kutular başlangıçta görünmez olacak */
+      display: none;
     }
 
-    @keyframes appear {
+    /* Kutuların görünür hale gelme animasyonu */
+    @keyframes boxAppear {
       from {
-        transform: scale(0.5);
         opacity: 0;
+        transform: scale(0.5);
       }
 
       to {
-        transform: scale(1);
         opacity: 1;
+        transform: scale(1);
       }
+    }
+
+    /* JavaScript ile gösterildiğinde animasyon uygulamak için */
+    .grid div.show {
+      display: flex;
+      /* Kutular görünür hale gelecek */
+      animation: boxAppear 0.5s ease forwards;
     }
 
     .grid div:hover:not(.disabled) {
@@ -100,7 +109,6 @@
       background: linear-gradient(145deg, #e2e2e2, #6b6b6b);
       color: black;
       cursor: default;
-      /* border: 1px solid #000;  */
       box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
     }
 
@@ -233,25 +241,25 @@
       const grid = document.getElementById('grid');
       grid.innerHTML = '';
 
+      // Her kutu oluşturulurken animasyon gecikmesi ekleniyor.
+      // numbers.forEach((num, index) => {
+      //   const div = document.createElement('div');
+      //   div.innerText = num;
+      //   div.style.animationDelay = (index * 0.1) + 's'; // Her kutu için gecikme ayarı
+      //   div.addEventListener('click', () => checkAnswer(num, correctNumber, div));
+      //   grid.appendChild(div);
+      // });
       numbers.forEach((num, index) => {
         const div = document.createElement('div');
         div.innerText = num;
-        div.style.opacity = '0'; // Başlangıçta görünmez yap
-        div.style.transform = 'scale(0.5)'; // Küçük başlat
+        setTimeout(() => {
+          div.classList.add('show'); // Kutular animasyonlu olarak görünür olacak
+        }, index * 100); // Her kutu için gecikme
         div.addEventListener('click', () => checkAnswer(num, correctNumber, div));
         grid.appendChild(div);
-
-        // Rastgele bir gecikmeyle animasyonu başlat
-        setTimeout(() => {
-          div.style.opacity = '1';
-          div.style.transform = 'scale(1)';
-          div.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-        }, Math.random() * 500); // 0 ile 500 ms arasında rastgele bir gecikme
       });
-
       questionCount++;
     }
-
 
     function checkAnswer(selectedNumber, correctNumber, div) {
       if (isAnswered) return;
@@ -274,7 +282,7 @@
         item.classList.add('disabled');
       });
 
-      // 9. soruya cevap verildiğinde direkt sonuçları göster
+      // Son soruya gelinmişse direkt sonuçları göster
       if (questionCount === totalQuestions) {
         showSummary();
       }
@@ -287,7 +295,9 @@
         <p>Soru Sayısı: ${totalQuestions}</p>
         <p>Doğru Cevap Sayısı: ${correctAnswers}</p>
         <p>Yanlış Cevap Sayısı: ${wrongAnswers}</p>
-        <p style="font-size: 32px; color: ${successRate >= 50 ? '#4caf50' : '#ff6f61'}; font-weight: bold;">Başarı Oranı: ${successRate.toFixed(2)}%</p>
+        <p style="font-size: 32px; color: ${successRate >= 50 ? '#4caf50' : '#ff6f61'}; font-weight: bold;">
+          Başarı Oranı: ${successRate.toFixed(2)}%
+        </p>
       `;
       document.getElementById('nextButton').style.display = 'none';
       document.getElementById('restartButton').style.display = 'block';
@@ -320,7 +330,7 @@
     generateQuestion();
   </script>
 <hr><a href="https://mesutakcan.blogspot.com">©2025 Mesut Akcan</a>
-<!-- v13 -->
+<!-- v14 -->
 </body>
 
 </html>
