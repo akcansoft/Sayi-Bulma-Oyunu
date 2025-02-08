@@ -50,25 +50,13 @@
       color: #fff;
       border-radius: 20px;
       cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
       box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3),
         inset -4px -4px 8px rgba(0, 0, 0, 0.2),
         inset 4px 4px 8px rgba(255, 255, 255, 0.2);
       background: linear-gradient(135deg, #ff7f7f, #d9534f);
       transform-style: preserve-3d;
-      opacity: 0; /* Başlangıçta kutular görünmez */
-      animation: appear 0.5s ease forwards; /* Animasyon ekleniyor */
-    }
-
-    @keyframes appear {
-      from {
-        transform: scale(0.5);
-        opacity: 0;
-      }
-      to {
-        transform: scale(1);
-        opacity: 1;
-      }
+      opacity: 1; /* Kutular başlangıçta görünür */
     }
 
     /* Her kutu için farklı gecikme süreleri */
@@ -80,7 +68,7 @@
     .grid div:nth-child(6) { animation-delay: 0.6s; }
     .grid div:nth-child(7) { animation-delay: 0.7s; }
     .grid div:nth-child(8) { animation-delay: 0.8s; }
-    .grid div:nth-child(9) { animation-delay: 0.9s; }
+    .grid div:nth-child(9) { animation-delay: 0.9s; }    
 
     .grid div:hover:not(.disabled) {
       font-size: 50px;
@@ -238,7 +226,7 @@
       numbers.forEach((num, index) => {
         const div = document.createElement('div');
         div.innerText = num;
-        div.style.animationDelay = `${index * 0.1}s`; // Her kutu için gecikme ayarı
+        div.style.transitionDelay = `${index * 0.1}s`; /* Her kutu için gecikme ayarı */
         div.addEventListener('click', () => checkAnswer(num, correctNumber, div));
         grid.appendChild(div);
       });
@@ -313,7 +301,7 @@
     generateQuestion();
   </script>
 <hr><a href="https://mesutakcan.blogspot.com">©2025 Mesut Akcan</a>
-<!-- v16 -->
+<!-- v17 -->
 </body>
 
 </html>
