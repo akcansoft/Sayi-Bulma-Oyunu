@@ -68,42 +68,6 @@
       }
     }
 
-    .grid div:nth-child(1) {
-      animation-delay: 0.1s;
-    }
-
-    .grid div:nth-child(2) {
-      animation-delay: 0.2s;
-    }
-
-    .grid div:nth-child(3) {
-      animation-delay: 0.3s;
-    }
-
-    .grid div:nth-child(4) {
-      animation-delay: 0.4s;
-    }
-
-    .grid div:nth-child(5) {
-      animation-delay: 0.5s;
-    }
-
-    .grid div:nth-child(6) {
-      animation-delay: 0.6s;
-    }
-
-    .grid div:nth-child(7) {
-      animation-delay: 0.7s;
-    }
-
-    .grid div:nth-child(8) {
-      animation-delay: 0.8s;
-    }
-
-    .grid div:nth-child(9) {
-      animation-delay: 0.9s;
-    }
-
     .grid div:hover:not(.disabled) {
       transform: scale(1.2) !important;
       font-size: 50px;
@@ -264,6 +228,7 @@
       numbers.forEach((num, index) => {
         const div = document.createElement('div');
         div.innerText = num;
+        div.style.animationDelay = `${index * 0.1}s`; // Her kutu için gecikme ayarı
         div.addEventListener('click', () => checkAnswer(num, correctNumber, div));
         grid.appendChild(div);
       });
@@ -280,6 +245,7 @@
         messageElement.innerText = 'Bildiniz. Tebrikler 🎉';
         messageElement.classList.remove('error'); // Yeşil renk
         correctAnswers++;
+        div.style.animationDelay = '0s'; // Animasyon gecikmesini sıfırla
         div.classList.add('correct');
       } else {
         messageElement.innerText = 'Bilemediniz, daha dikkatli olun 😊';
@@ -341,7 +307,7 @@
     generateQuestion();
   </script>
 <hr><a href="https://mesutakcan.blogspot.com">©2025 Mesut Akcan</a>
-<!-- v19 -->
+<!-- v20 -->
 </body>
 
 </html>
