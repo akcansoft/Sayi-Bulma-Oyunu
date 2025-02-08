@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eğlenceli Sayı Bulma Oyunu</title>
+    <title>Sayı Bulma Oyunu</title>
     <style>
         body {
             font-family: 'Comic Sans MS', cursive, sans-serif;
@@ -12,13 +12,16 @@
             background-color: #f9f9f9;
         }
         h1 {
-            font-size: 40px;
-            color: #ff6f61;
-            /* animation: bounce 1s infinite; */
+            font-size: 50px;
+            color: #ff00d4;
+            font-weight: bold;
+            text-shadow: 4px 4px 7px rgba(0, 0, 0, 0.5); 
+            -webkit-text-stroke: 2px #770063; /* Kenar çizgisi kalınlığı ve rengi */
+            animation: jump 0.5s ease;
         }
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+        @keyframes jump {
+            0%, 100% { transform: translateY(0) scale(1.2) }
+            50% { transform: translateY(-20px) scale(1.2) }
         }
         .grid {
             display: grid;
@@ -36,24 +39,39 @@
             font-size: 30px;
             font-weight: bold;
             color: #fff;
-            background-color: #ff6f61;
-            border: 3px solid #942d2f;
+            /*background-color: #fd3624;*/
+            /*border: 3px solid #942d2f;*/
             border-radius: 20px;
             cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s, font-size 0.2s, box-shadow 0.2s;
-            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+            /* transition: transform 0.2s, background-color 0.2s, font-size 0.2s, box-shadow 0.2s; */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            /* box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); */
+
+            /* 3D Kutu Gölgesi */
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3),
+                        inset -4px -4px 8px rgba(0, 0, 0, 0.2),
+                        inset 4px 4px 8px rgba(255, 255, 255, 0.2);
+            
+            /*background: linear-gradient(145deg, #b209e6, #000000); /* 3D Işık Yansıması */
+            background: linear-gradient(135deg, #ff7f7f, #d9534f); /* 3D Işık Yansıması */
+            transform-style: preserve-3d; /* 3D Dönüşüm */
         }
         .grid div:hover:not(.disabled) {
-            background-color: #00DD00;
+            /*background-color: #00DD00;*/
             font-size: 50px;
-            border: 3px solid #105510;
-            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+            /* border: 3px solid #105510; */
+            /* box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5); */
             /* animation: bounce 1s infinite; */
             transform: scale(1.2) ; /* rotate(5deg); */
+            background: linear-gradient(145deg, #00DD00, #1f7a3a);
+            box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.5),
+                inset -5px -5px 10px rgba(0, 0, 0, 0.3),
+                inset 5px 5px 10px rgba(255, 255, 255, 0.3);            
         }
         .grid div.correct {
-            background-color: #00DD00;
-            font-size: 45px;
+            /*background-color: #00DD00;*/
+            background: linear-gradient(145deg, #00DD00, #1f7a3a);
+            font-size: 50px;
             transform: scale(1.2) ; /*rotate(5deg);*/
             cursor: default;
             animation: jump 0.5s ease;
@@ -61,7 +79,8 @@
             box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
         }
         .grid div.wrong {
-            background-color: #ccc;
+            /*background-color: #ccc;*/
+            background: linear-gradient(145deg, #d3d3d3, #aaaaaa);
             color: #000;
             cursor: default;
             border: 3px solid #000;
@@ -127,7 +146,7 @@
     </style>
 </head>
 <body>
-    <h1>Eğlenceli Sayı Bulma Oyunu</h1>
+    <h1>Sayı Bulma Oyunu</h1>
     <div id="question" style="font-size: 28px; color: #333; animation: fadeIn 1s;"></div>
     <div class="grid" id="grid"></div>
     <div class="message" id="message"></div>
@@ -243,6 +262,6 @@
         generateQuestion();
     </script>
 <hr><a href="https://mesutakcan.blogspot.com">©2025 Mesut Akcan</a>
-<!-- v7 -->
+<!-- v7a -->
 </body>
 </html>
