@@ -20,13 +20,17 @@
       font-weight: bold;
       text-shadow: 4px 4px 7px rgba(0, 0, 0, 0.5);
       -webkit-text-stroke: 2px #770063;
-      animation: jump 0.5s ease 1; /* 1 kez çalışacak */
+      animation: jump 0.5s ease 1;
+      /* 1 kez çalışacak */
     }
 
     @keyframes jump {
-      0%, 100% {
+
+      0%,
+      100% {
         transform: translateY(0) scale(1.2);
       }
+
       50% {
         transform: translateY(-20px) scale(1.2);
       }
@@ -57,17 +61,56 @@
         inset 4px 4px 8px rgba(255, 255, 255, 0.2);
       background: linear-gradient(135deg, #ff7f7f, #d9534f);
       transform-style: preserve-3d;
-      animation: appear 0.5s ease; 
+      animation: appear 0.5s ease;
     }
+
     @keyframes appear {
       from {
         transform: scale(0.5);
         opacity: 0;
       }
+
       to {
         transform: scale(1);
         opacity: 1;
       }
+    }
+
+    /* Her kutu için farklı gecikme süreleri */
+    .grid div:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    .grid div:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .grid div:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    .grid div:nth-child(4) {
+      animation-delay: 0.4s;
+    }
+
+    .grid div:nth-child(5) {
+      animation-delay: 0.5s;
+    }
+
+    .grid div:nth-child(6) {
+      animation-delay: 0.6s;
+    }
+
+    .grid div:nth-child(7) {
+      animation-delay: 0.7s;
+    }
+
+    .grid div:nth-child(8) {
+      animation-delay: 0.8s;
+    }
+
+    .grid div:nth-child(9) {
+      animation-delay: 0.9s;
     }
 
     .grid div:hover:not(.disabled) {
@@ -91,8 +134,8 @@
     }
 
     .grid div.wrong {
-      background: linear-gradient(145deg, #e2e2e2, #6b6b6b); 
-      color : black;
+      background: linear-gradient(145deg, #e2e2e2, #6b6b6b);
+      color: black;
       cursor: default;
       /* border: 1px solid #000;  */
       box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
@@ -101,7 +144,6 @@
     .grid div.disabled {
       pointer-events: none;
     }
-    
 
     .message {
       margin-top: 20px;
@@ -115,6 +157,7 @@
       from {
         opacity: 0;
       }
+
       to {
         opacity: 1;
       }
@@ -158,6 +201,7 @@
         transform: translateY(20px);
         opacity: 0;
       }
+
       to {
         transform: translateY(0);
         opacity: 1;
@@ -304,7 +348,7 @@
     generateQuestion();
   </script>
 <hr><a href="https://mesutakcan.blogspot.com">©2025 Mesut Akcan</a>
-<!-- v12 -->
+<!-- v12a -->
 </body>
 
 </html>
