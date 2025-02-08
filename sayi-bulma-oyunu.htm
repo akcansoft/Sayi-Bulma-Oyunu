@@ -86,6 +86,12 @@
             from { transform: translateY(20px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -93,16 +99,19 @@
     <div id="question" style="font-size: 28px; color: #333; animation: fadeIn 1s;"></div>
     <div class="grid" id="grid"></div>
     <div class="message" id="message"></div>
-    <button id="nextButton" disabled>Sonraki Soru 🚀</button>
+    <div class="button-container">
+        <button id="nextButton" disabled>Sonraki Soru 🚀</button>
+        <button id="restartButton" style="display: none;">Yeni Oyun 🔄</button>
+    </div>
     <div id="summary"></div>
-    <button id="restartButton" style="display: none;">Yeni Oyun 🔄</button>
 
     <script>
         let correctAnswers = 0;
         let wrongAnswers = 0;
         let questionCount = 0;
-        const totalQuestions = 10;
+        const totalQuestions = 9;
         let isAnswered = false;
+        let usedNumbers = new Set();
 
         function generateQuestion() {
             if (questionCount >= totalQuestions) {
@@ -110,7 +119,12 @@
                 return;
             }
 
-            const correctNumber = Math.floor(Math.random() * 9) + 1;
+            let correctNumber;
+            do {
+                correctNumber = Math.floor(Math.random() * 9) + 1;
+            } while (usedNumbers.has(correctNumber));
+            usedNumbers.add(correctNumber);
+
             const numbers = Array.from({ length: 9 }, (_, i) => i + 1).sort(() => Math.random() - 0.5);
 
             document.getElementById('question').innerText = `Aşağıdaki rakamlardan hangisi '${numberToWord(correctNumber)}'${getSuffix(correctNumber)}?`;
@@ -163,17 +177,15 @@
         }
 
         function getSuffix(num) {
-            if (num === 3 || num === 4 ) return 'tür';
-            if (num === 6 ) return 'dır';
-						if (num === 5 ) return 'tir';
-						if (num === 9 ) return 'dur';
-            return 'dir';
+            const suffixes = { 3: 'tür', 4: 'tür', 5: 'tir', 6: 'dır', 9: 'dur' };
+            return suffixes[num] || 'dir';
         }
 
         function restartGame() {
             correctAnswers = 0;
             wrongAnswers = 0;
             questionCount = 0;
+            usedNumbers.clear();
             document.getElementById('summary').innerHTML = '';
             document.getElementById('nextButton').style.display = 'block';
             document.getElementById('restartButton').style.display = 'none';
@@ -186,6 +198,6 @@
         generateQuestion();
     </script>
 <hr><a href="https://mesutakcan.blogspot.com">©2025 Mesut Akcan</a>
-<!-- v3 -->
+<!-- v4 -->
 </body>
 </html>
