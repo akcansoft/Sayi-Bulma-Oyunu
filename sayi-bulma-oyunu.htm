@@ -1,227 +1,331 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eğlenceli Sayı Bulma Oyunu</title>
-    <style>
-body {
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    text-align: center;
-    margin-top: 50px;
-    background-color: #f9f9f9;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sayı Bulma Oyunu</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background-color: #f9f9f9;
+    }
 
-h1 {
-    font-size: 40px;
-    color: #ff6f61;
-}
+    h1 {
+      font-size: 60px;
+      /* Yazı tipi boyutunu artırdık */
+      color: #ff00d4;
+      /* Canlı bir renk seçtik */
+      font-weight: bold;
+      text-shadow: 4px 4px 7px rgba(0, 0, 0, 0.5);
+      -webkit-text-stroke: 2px #770063;
+      /* Kenar çizgisi kalınlığı ve rengi */
+      /* animation: colorChange 3s infinite; */
+      /* Animasyon ekledik */
+      animation: jump 0.5s ease;
+    }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(3, 105px);
-    grid-gap: 15px;
-    justify-content: center;
-    margin: 20px auto;
-    perspective: 600px; /* 3D Efekt için Perspektif Eklendi */
-}
+    /* Mevcut jump animasyonunu koruyoruz */
+    @keyframes jump {
 
-.grid div {
-    width: 100px;
-    height: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 30px;
-    font-weight: bold;
-    color: #fff;
-    background: linear-gradient(145deg, #ff7f7f, #d9534f); /* 3D Işık Yansıması */
-    border-radius: 15px;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    
-    /* 3D Kutu Gölgesi */
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3),
-                inset -4px -4px 8px rgba(0, 0, 0, 0.2),
-                inset 4px 4px 8px rgba(255, 255, 255, 0.2);
-                
-    transform-style: preserve-3d; /* 3D Dönüşüm */
-}
+      0%,
+      100% {
+        transform: translateY(0) scale(1.2)
+      }
 
-.grid div:hover {
-    background: linear-gradient(145deg, #32a852, #1f7a3a);
-    transform: rotateX(10deg) rotateY(5deg) scale(1.1);
-    box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.5),
-                inset -5px -5px 10px rgba(0, 0, 0, 0.3),
-                inset 5px 5px 10px rgba(255, 255, 255, 0.3);
-}
+      50% {
+        transform: translateY(-20px) scale(1.2)
+      }
+    }
 
-.grid div.correct {
-    background: linear-gradient(145deg, #00dd00, #008800);
-    transform: scale(1.2);
-    box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.5),
-                inset -5px -5px 10px rgba(0, 0, 0, 0.3),
-                inset 5px 5px 10px rgba(255, 255, 255, 0.3);
-}
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 105px);
+      grid-gap: 15px;
+      justify-content: center;
+      margin: 20px auto;
+    }
 
-.grid div.wrong {
-    background: linear-gradient(145deg, #d3d3d3, #aaaaaa);
-    color: #000;
-    cursor: default;
-    box-shadow: none;
-}
+    .grid div {
+      width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      font-weight: bold;
+      color: #fff;
+      /*background-color: #fd3624;*/
+      /*border: 3px solid #942d2f;*/
+      border-radius: 20px;
+      cursor: pointer;
+      /* transition: transform 0.2s, background-color 0.2s, font-size 0.2s, box-shadow 0.2s; */
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      /* box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); */
 
-.grid div:active {
-    transform: scale(0.9) rotateX(5deg);
-}
+      /* 3D Kutu Gölgesi */
+      box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3),
+        inset -4px -4px 8px rgba(0, 0, 0, 0.2),
+        inset 4px 4px 8px rgba(255, 255, 255, 0.2);
 
-/* Buton Tasarımı */
-button {
-    margin-top: 20px;
-    padding: 15px 30px;
-    font-size: 20px;
-    font-weight: bold;
-    color: #fff;
-    background: linear-gradient(145deg, #4caf50, #388e3c);
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3),
-                inset -3px -3px 6px rgba(0, 0, 0, 0.2),
-                inset 3px 3px 6px rgba(255, 255, 255, 0.2);
-}
+      /*background: linear-gradient(145deg, #b209e6, #000000); /* 3D Işık Yansıması */
+      background: linear-gradient(135deg, #ff7f7f, #d9534f);
+      /* 3D Işık Yansıması */
+      transform-style: preserve-3d;
+      /* 3D Dönüşüm */
+    }
 
-button:hover {
-    background: linear-gradient(145deg, #45a049, #2e7d32);
-    transform: scale(1.1);
-    box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.5),
-                inset -5px -5px 10px rgba(0, 0, 0, 0.3),
-                inset 5px 5px 10px rgba(255, 255, 255, 0.3);
-}
+    .grid div:hover:not(.disabled) {
+      /*background-color: #00DD00;*/
+      font-size: 50px;
+      /* border: 3px solid #105510; */
+      /* box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5); */
+      /* animation: bounce 1s infinite; */
+      transform: scale(1.2);
+      /* rotate(5deg); */
+      background: linear-gradient(145deg, #00DD00, #1f7a3a);
+      box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.5),
+        inset -5px -5px 10px rgba(0, 0, 0, 0.3),
+        inset 5px 5px 10px rgba(255, 255, 255, 0.3);
+    }
 
-button:active {
-    transform: scale(0.95);
-}
-</style>
+    .grid div.correct {
+      /*background-color: #00DD00;*/
+      background: linear-gradient(145deg, #00DD00, #1f7a3a);
+      font-size: 50px;
+      transform: scale(1.2);
+      /*rotate(5deg);*/
+      cursor: default;
+      animation: jump 0.5s ease;
+      /* border: 3px solid #005300; */
+      /* box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5); */
+      box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.5),
+        inset -5px -5px 10px rgba(0, 0, 0, 0.3),
+        inset 5px 5px 10px rgba(255, 255, 255, 0.3);
+    }
+
+    .grid div.wrong {
+      /*background-color: #ccc;*/
+      background: linear-gradient(145deg, #d3d3d3, #aaaaaa);
+      color: #000;
+      cursor: default;
+      border: 3px solid #000;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .grid div.disabled {
+      pointer-events: none;
+    }
+
+    @keyframes jump {
+
+      0%,
+      100% {
+        transform: translateY(0) scale(1.2)
+      }
+
+      50% {
+        transform: translateY(-20px) scale(1.2)
+      }
+    }
+
+    .message {
+      margin-top: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #4caf50;
+      animation: fadeIn 1s;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 15px 30px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #fff;
+      background-color: #4caf50;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+      box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    button:hover {
+      background-color: #45a049;
+      transform: scale(1.1);
+      box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    #summary {
+      margin-top: 30px;
+      font-size: 24px;
+      color: #333;
+      animation: slideIn 1s;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .question {
+      font-size: 28px;
+      color: #333;
+      animation: fadeIn 1s;
+    }
+
+  </style>
 </head>
+
 <body>
-    <h1>Eğlenceli Sayı Bulma Oyunu</h1>
-    <div id="question" style="font-size: 28px; color: #333; animation: fadeIn 1s;"></div>
-    <div class="grid" id="grid"></div>
-    <div class="message" id="message"></div>
-    <div class="button-container">
-        <button id="nextButton" disabled>Sonraki Soru 🚀</button>
-        <button id="restartButton" style="display: none;">Yeni Oyun 🔄</button>
-    </div>
-    <div id="summary"></div>
+  <h1>Sayı Bulma Oyunu</h1>
+  <div class="question" id="question"></div>
+  <div class="grid" id="grid"></div>
+  <div class="message" id="message"></div>
+  <div class="button-container">
+    <button id="nextButton" disabled>Sonraki Soru 🚀</button>
+    <button id="restartButton" style="display: none;">Yeni Oyun 🔄</button>
+  </div>
+  <div id="summary"></div>
 
-    <script>
-        let correctAnswers = 0;
-        let wrongAnswers = 0;
-        let questionCount = 0;
-        const totalQuestions = 9;
-        let isAnswered = false;
-        let usedNumbers = new Set();
+  <script>
+    let correctAnswers = 0;
+    let wrongAnswers = 0;
+    let questionCount = 0;
+    const totalQuestions = 9;
+    let isAnswered = false;
+    let usedNumbers = new Set();
 
-        function generateQuestion() {
-            if (questionCount >= totalQuestions) {
-                showSummary();
-                return;
-            }
+    function generateQuestion() {
+      if (questionCount >= totalQuestions) {
+        showSummary();
+        return;
+      }
 
-            let correctNumber;
-            do {
-                correctNumber = Math.floor(Math.random() * 9) + 1;
-            } while (usedNumbers.has(correctNumber));
-            usedNumbers.add(correctNumber);
+      let correctNumber;
+      do {
+        correctNumber = Math.floor(Math.random() * 9) + 1;
+      } while (usedNumbers.has(correctNumber));
+      usedNumbers.add(correctNumber);
 
-            const numbers = Array.from({ length: 9 }, (_, i) => i + 1).sort(() => Math.random() - 0.5);
+      const numbers = Array.from({ length: 9 }, (_, i) => i + 1).sort(() => Math.random() - 0.5);
 
-            document.getElementById('question').innerText = `${questionCount + 1}- Aşağıdaki rakamlardan hangisi '${numberToWord(correctNumber)}'${getSuffix(correctNumber)}?`;
-            document.getElementById('message').innerText = '';
-            document.getElementById('nextButton').disabled = true;
-            isAnswered = false;
+      document.getElementById('question').innerText = `${questionCount + 1}- Aşağıdaki rakamlardan hangisi '${numberToWord(correctNumber)}'${getSuffix(correctNumber)} 🤔`;
+      document.getElementById('message').innerText = '';
+      document.getElementById('nextButton').disabled = true;
+      isAnswered = false;
 
-            const grid = document.getElementById('grid');
-            grid.innerHTML = '';
-            numbers.forEach(num => {
-                const div = document.createElement('div');
-                div.innerText = num;
-                div.addEventListener('click', () => checkAnswer(num, correctNumber, div));
-                grid.appendChild(div);
-            });
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '';
+      numbers.forEach(num => {
+        const div = document.createElement('div');
+        div.innerText = num;
+        div.addEventListener('click', () => checkAnswer(num, correctNumber, div));
+        grid.appendChild(div);
+      });
 
-            questionCount++;
-        }
+      questionCount++;
+    }
 
-        function checkAnswer(selectedNumber, correctNumber, div) {
-            if (isAnswered) return;
+    function checkAnswer(selectedNumber, correctNumber, div) {
+      if (isAnswered) return;
 
-            if (selectedNumber === correctNumber) {
-                document.getElementById('message').innerText = 'Bildiniz. Tebrikler 🎉';
-                correctAnswers++;
-                div.classList.add('correct');
-            } else {
-                document.getElementById('message').innerText = 'Bilemediniz, daha dikkatli olun 😊';
-                wrongAnswers++;
-                div.classList.add('wrong');
-            }
-            isAnswered = true;
-            document.getElementById('nextButton').disabled = false;
+      if (selectedNumber === correctNumber) {
+        document.getElementById('message').innerText = 'Bildiniz. Tebrikler 🎉';
+        correctAnswers++;
+        div.classList.add('correct');
+      } else {
+        document.getElementById('message').innerText = 'Bilemediniz, daha dikkatli olun 😊';
+        wrongAnswers++;
+        div.classList.add('wrong');
+      }
+      isAnswered = true;
+      document.getElementById('nextButton').disabled = false;
 
-            // Tüm kutuları devre dışı bırak
-            const gridItems = document.querySelectorAll('.grid div');
-            gridItems.forEach(item => {
-                item.classList.add('disabled');
-            });
+      // Tüm kutuları devre dışı bırak
+      const gridItems = document.querySelectorAll('.grid div');
+      gridItems.forEach(item => {
+        item.classList.add('disabled');
+      });
 
-            // 9. soruya cevap verildiğinde direkt sonuçları göster
-            if (questionCount === totalQuestions) {
-                showSummary();
-            }
-        }
+      // 9. soruya cevap verildiğinde direkt sonuçları göster
+      if (questionCount === totalQuestions) {
+        showSummary();
+      }
+    }
 
-        function showSummary() {
-            const successRate = (correctAnswers / totalQuestions) * 100;
-            document.getElementById('summary').innerHTML = `
+    function showSummary() {
+      const successRate = (correctAnswers / totalQuestions) * 100;
+      document.getElementById('summary').innerHTML = `
                 <h2>Oyun Bitti! 🏆</h2>
                 <p>Soru Sayısı: ${totalQuestions}</p>
                 <p>Doğru Cevap Sayısı: ${correctAnswers}</p>
                 <p>Yanlış Cevap Sayısı: ${wrongAnswers}</p>
                 <p>Başarı Oranı: ${successRate.toFixed(2)}%</p>
             `;
-            document.getElementById('nextButton').style.display = 'none';
-            document.getElementById('restartButton').style.display = 'block';
-        }
+      document.getElementById('nextButton').style.display = 'none';
+      document.getElementById('restartButton').style.display = 'block';
+    }
 
-        function numberToWord(num) {
-            const words = ['bir', 'iki', 'üç', 'dört', 'beş', 'altı', 'yedi', 'sekiz', 'dokuz'];
-            return words[num - 1];
-        }
+    function numberToWord(num) {
+      const words = ['bir', 'iki', 'üç', 'dört', 'beş', 'altı', 'yedi', 'sekiz', 'dokuz'];
+      return words[num - 1];
+    }
 
-        function getSuffix(num) {
-            const suffixes = { 3: 'tür', 4: 'tür', 5: 'tir', 6: 'dır', 9: 'dur' };
-            return suffixes[num] || 'dir';
-        }
+    function getSuffix(num) {
+      const suffixes = { 3: 'tür', 4: 'tür', 5: 'tir', 6: 'dır', 9: 'dur' };
+      return suffixes[num] || 'dir';
+    }
 
-        function restartGame() {
-            correctAnswers = 0;
-            wrongAnswers = 0;
-            questionCount = 0;
-            usedNumbers.clear();
-            document.getElementById('summary').innerHTML = '';
-            document.getElementById('nextButton').style.display = 'block';
-            document.getElementById('restartButton').style.display = 'none';
-            generateQuestion();
-        }
+    function restartGame() {
+      correctAnswers = 0;
+      wrongAnswers = 0;
+      questionCount = 0;
+      usedNumbers.clear();
+      document.getElementById('summary').innerHTML = '';
+      document.getElementById('nextButton').style.display = 'block';
+      document.getElementById('restartButton').style.display = 'none';
+      generateQuestion();
+    }
 
-        document.getElementById('nextButton').addEventListener('click', generateQuestion);
-        document.getElementById('restartButton').addEventListener('click', restartGame);
+    document.getElementById('nextButton').addEventListener('click', generateQuestion);
+    document.getElementById('restartButton').addEventListener('click', restartGame);
 
-        generateQuestion();
-    </script>
+    generateQuestion();
+  </script>
 <hr><a href="https://mesutakcan.blogspot.com">©2025 Mesut Akcan</a>
-<!-- v8 -->
+<!-- v9 -->
 </body>
 </html>
