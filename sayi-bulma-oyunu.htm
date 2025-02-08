@@ -22,7 +22,7 @@
         }
         .grid {
             display: grid;
-            grid-template-columns: repeat(3, 100px);
+            grid-template-columns: repeat(3, 105px);
             grid-gap: 15px;
             justify-content: center;
             margin: 20px auto;
@@ -37,23 +37,37 @@
             font-weight: bold;
             color: #fff;
             background-color: #ff6f61;
+            border: 3px solid #942d2f;
             border-radius: 20px;
             cursor: pointer;
             transition: transform 0.2s, background-color 0.2s, font-size 0.2s;
+        }
+        .grid div:hover:not(.disabled) {
+            transform: scale(1.2);
+            background-color: #00DD00;
+            font-size: 50px;
+            border: 3px solid #105510;
         }
         .grid div.correct {
             background-color: #00DD00;
             font-size: 45px;
             transform: scale(1.2);
             cursor: default;
+            animation: jump 0.5s ease;
+            border: 3px solid #005300;
         }
         .grid div.wrong {
             background-color: #ccc;
             color: #000;
             cursor: default;
+            border: 3px solid #000;
         }
         .grid div.disabled {
             pointer-events: none;
+        }
+        @keyframes jump {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
         }
         .message {
             margin-top: 20px;
@@ -216,6 +230,6 @@
         generateQuestion();
     </script>
 <hr><a href="https://mesutakcan.blogspot.com">©2025 Mesut Akcan</a>
-<!-- v5 -->
+<!-- v6 -->    
 </body>
 </html>
