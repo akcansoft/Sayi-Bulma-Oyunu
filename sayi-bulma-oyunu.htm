@@ -3,17 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sorular</title>
+    <title>Eğlenceli Sayı Oyunu</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
             text-align: center;
             margin-top: 50px;
+            background-color: #f9f9f9;
+        }
+        h1 {
+            font-size: 40px;
+            color: #ff6f61;
+            animation: bounce 1s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
         .grid {
             display: grid;
             grid-template-columns: repeat(3, 100px);
-            grid-gap: 10px;
+            grid-gap: 15px;
             justify-content: center;
             margin: 20px auto;
         }
@@ -23,30 +33,63 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 30px;
             font-weight: bold;
-            border: 1px solid #ccc;
+            color: #fff;
+            background-color: #ff6f61;
+            border-radius: 20px;
             cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .grid div:hover {
+            transform: scale(1.1);
+            background-color: #ff3b2f;
         }
         .message {
             margin-top: 20px;
-            font-size: 18px;
+            font-size: 24px;
             font-weight: bold;
+            color: #4caf50;
+            animation: fadeIn 1s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         button {
             margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
+            padding: 15px 30px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #4caf50;
+            border: none;
+            border-radius: 25px;
             cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+        #summary {
+            margin-top: 30px;
+            font-size: 24px;
+            color: #333;
+            animation: slideIn 1s;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
     </style>
 </head>
 <body>
-    <h1>Sorular</h1>
-    <div id="question"></div>
+    <h1>Eğlenceli Sayı Oyunu</h1>
+    <div id="question" style="font-size: 28px; color: #333; animation: fadeIn 1s;"></div>
     <div class="grid" id="grid"></div>
     <div class="message" id="message"></div>
-    <button id="nextButton">Sonraki</button>
+    <button id="nextButton">Sonraki Soru 🚀</button>
     <div id="summary"></div>
 
     <script>
@@ -81,10 +124,10 @@
 
         function checkAnswer(selectedNumber, correctNumber) {
             if (selectedNumber === correctNumber) {
-                document.getElementById('message').innerText = 'Bildiniz. Tebrikler';
+                document.getElementById('message').innerText = 'Bildiniz. Tebrikler 🎉';
                 correctAnswers++;
             } else {
-                document.getElementById('message').innerText = 'Bilemediniz, daha dikkatli olun';
+                document.getElementById('message').innerText = 'Bilemediniz, daha dikkatli olun 😊';
                 wrongAnswers++;
             }
         }
@@ -92,7 +135,7 @@
         function showSummary() {
             const successRate = (correctAnswers / totalQuestions) * 100;
             document.getElementById('summary').innerHTML = `
-                <h2>Sonuçlar</h2>
+                <h2>Oyun Bitti! 🏆</h2>
                 <p>Soru Sayısı: ${totalQuestions}</p>
                 <p>Doğru Cevap Sayısı: ${correctAnswers}</p>
                 <p>Yanlış Cevap Sayısı: ${wrongAnswers}</p>
@@ -110,7 +153,7 @@
 
         generateQuestion();
     </script>
-	<hr><a href="https://mesutakcan.blogspot.com">©2025 Mesut Akcan</a>
-    <!-- v1 -->
+<hr><a href="https://mesutakcan.blogspot.com">©2025 Mesut Akcan</a>
+<!-- v2 -->
 </body>
 </html>
