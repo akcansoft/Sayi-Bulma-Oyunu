@@ -14,7 +14,7 @@
         h1 {
             font-size: 40px;
             color: #ff6f61;
-            animation: bounce 1s infinite;
+            /* animation: bounce 1s infinite; */
         }
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
@@ -40,34 +40,39 @@
             border: 3px solid #942d2f;
             border-radius: 20px;
             cursor: pointer;
-            transition: transform 0.2s, background-color 0.2s, font-size 0.2s;
+            transition: transform 0.2s, background-color 0.2s, font-size 0.2s, box-shadow 0.2s;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
         }
         .grid div:hover:not(.disabled) {
-            transform: scale(1.2);
             background-color: #00DD00;
             font-size: 50px;
             border: 3px solid #105510;
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
+            /* animation: bounce 1s infinite; */
+            transform: scale(1.2) ; /* rotate(5deg); */
         }
         .grid div.correct {
             background-color: #00DD00;
             font-size: 45px;
-            transform: scale(1.2);
+            transform: scale(1.2) ; /*rotate(5deg);*/
             cursor: default;
             animation: jump 0.5s ease;
             border: 3px solid #005300;
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
         }
         .grid div.wrong {
             background-color: #ccc;
             color: #000;
             cursor: default;
             border: 3px solid #000;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
         }
         .grid div.disabled {
             pointer-events: none;
         }
         @keyframes jump {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+            0%, 100% { transform: translateY(0) scale(1.2) }
+            50% { transform: translateY(-20px) scale(1.2) }
         }
         .message {
             margin-top: 20px;
@@ -91,14 +96,17 @@
             border-radius: 25px;
             cursor: pointer;
             transition: background-color 0.3s, transform 0.3s;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
         }
         button:hover {
             background-color: #45a049;
             transform: scale(1.1);
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
         }
         button:disabled {
             background-color: #ccc;
             cursor: not-allowed;
+            box-shadow: none;
         }
         #summary {
             margin-top: 30px;
@@ -188,6 +196,11 @@
             gridItems.forEach(item => {
                 item.classList.add('disabled');
             });
+
+            // 9. soruya cevap verildiğinde direkt sonuçları göster
+            if (questionCount === totalQuestions) {
+                showSummary();
+            }
         }
 
         function showSummary() {
@@ -230,6 +243,6 @@
         generateQuestion();
     </script>
 <hr><a href="https://mesutakcan.blogspot.com">©2025 Mesut Akcan</a>
-<!-- v6 -->    
+<!-- v7 -->
 </body>
 </html>
