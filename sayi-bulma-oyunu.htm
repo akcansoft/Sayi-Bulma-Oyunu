@@ -72,6 +72,10 @@
             background-color: #45a049;
             transform: scale(1.05);
         }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
         #summary {
             margin-top: 30px;
             font-size: 24px;
@@ -89,14 +93,16 @@
     <div id="question" style="font-size: 28px; color: #333; animation: fadeIn 1s;"></div>
     <div class="grid" id="grid"></div>
     <div class="message" id="message"></div>
-    <button id="nextButton">Sonraki Soru 🚀</button>
+    <button id="nextButton" disabled>Sonraki Soru 🚀</button>
     <div id="summary"></div>
+    <button id="restartButton" style="display: none;">Yeni Oyun 🔄</button>
 
     <script>
         let correctAnswers = 0;
         let wrongAnswers = 0;
         let questionCount = 0;
         const totalQuestions = 10;
+        let isAnswered = false;
 
         function generateQuestion() {
             if (questionCount >= totalQuestions) {
@@ -107,8 +113,10 @@
             const correctNumber = Math.floor(Math.random() * 9) + 1;
             const numbers = Array.from({ length: 9 }, (_, i) => i + 1).sort(() => Math.random() - 0.5);
 
-            document.getElementById('question').innerText = `Aşağıdaki rakamlardan hangisi '${numberToWord(correctNumber)}'tir?`;
+            document.getElementById('question').innerText = `Aşağıdaki rakamlardan hangisi '${numberToWord(correctNumber)}'${getSuffix(correctNumber)}?`;
             document.getElementById('message').innerText = '';
+            document.getElementById('nextButton').disabled = true;
+            isAnswered = false;
 
             const grid = document.getElementById('grid');
             grid.innerHTML = '';
@@ -123,6 +131,8 @@
         }
 
         function checkAnswer(selectedNumber, correctNumber) {
+            if (isAnswered) return;
+
             if (selectedNumber === correctNumber) {
                 document.getElementById('message').innerText = 'Bildiniz. Tebrikler 🎉';
                 correctAnswers++;
@@ -130,6 +140,8 @@
                 document.getElementById('message').innerText = 'Bilemediniz, daha dikkatli olun 😊';
                 wrongAnswers++;
             }
+            isAnswered = true;
+            document.getElementById('nextButton').disabled = false;
         }
 
         function showSummary() {
@@ -142,6 +154,7 @@
                 <p>Başarı Oranı: ${successRate.toFixed(2)}%</p>
             `;
             document.getElementById('nextButton').style.display = 'none';
+            document.getElementById('restartButton').style.display = 'block';
         }
 
         function numberToWord(num) {
@@ -149,11 +162,30 @@
             return words[num - 1];
         }
 
+        function getSuffix(num) {
+            if (num === 3 || num === 4 ) return 'tür';
+            if (num === 6 ) return 'dır';
+						if (num === 5 ) return 'tir';
+						if (num === 9 ) return 'dur';
+            return 'dir';
+        }
+
+        function restartGame() {
+            correctAnswers = 0;
+            wrongAnswers = 0;
+            questionCount = 0;
+            document.getElementById('summary').innerHTML = '';
+            document.getElementById('nextButton').style.display = 'block';
+            document.getElementById('restartButton').style.display = 'none';
+            generateQuestion();
+        }
+
         document.getElementById('nextButton').addEventListener('click', generateQuestion);
+        document.getElementById('restartButton').addEventListener('click', restartGame);
 
         generateQuestion();
     </script>
 <hr><a href="https://mesutakcan.blogspot.com">©2025 Mesut Akcan</a>
-<!-- v2 -->
+<!-- v3 -->
 </body>
 </html>
