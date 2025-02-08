@@ -1,2 +1,2 @@
-# Sayi-Bulma-Oyunu
+# Sayı Bulma Oyunu
 Webde çalışan sayı bulma oyunu
