@@ -43,8 +43,7 @@
     }
 
     .grid div {
-      /* display: flex; */
-      display: inline-block; /* veya block */
+      display: inline-block;
       width: 100px;
       height: 100px;
       align-items: center;
@@ -60,12 +59,16 @@
         inset 4px 4px 8px rgba(255, 255, 255, 0.2);
       background: linear-gradient(135deg, #ff7f7f, #d9534f);
       transform-style: preserve-3d;
-
-      /* Kutular başlangıçta görünmez olacak */
-      display: none;
+      visibility: hidden;
+      /* Başlangıçta gizle */
     }
 
-    /* Kutuların görünür hale gelme animasyonu */
+    .grid div.show {
+      visibility: visible;
+      /* Animasyonla görünür yap */
+      animation: boxAppear 0.5s ease forwards;
+    }
+
     @keyframes boxAppear {
       from {
         opacity: 0;
@@ -76,13 +79,6 @@
         opacity: 1;
         transform: scale(1);
       }
-    }
-
-    /* JavaScript ile gösterildiğinde animasyon uygulamak için */
-    .grid div.show {
-      display: flex;
-      /* Kutular görünür hale gelecek */
-      animation: boxAppear 0.5s ease forwards;
     }
 
     .grid div:hover:not(.disabled) {
@@ -249,6 +245,16 @@
       //   div.addEventListener('click', () => checkAnswer(num, correctNumber, div));
       //   grid.appendChild(div);
       // });
+
+      // numbers.forEach((num, index) => {
+      //   const div = document.createElement('div');
+      //   div.innerText = num;
+      //   setTimeout(() => {
+      //     div.classList.add('show'); // Kutular animasyonlu olarak görünür olacak
+      //   }, index * 100); // Her kutu için gecikme
+      //   div.addEventListener('click', () => checkAnswer(num, correctNumber, div));
+      //   grid.appendChild(div);
+      // });
       numbers.forEach((num, index) => {
         const div = document.createElement('div');
         div.innerText = num;
@@ -258,6 +264,8 @@
         div.addEventListener('click', () => checkAnswer(num, correctNumber, div));
         grid.appendChild(div);
       });
+
+
       questionCount++;
     }
 
@@ -330,7 +338,7 @@
     generateQuestion();
   </script>
 <hr><a href="https://mesutakcan.blogspot.com">©2025 Mesut Akcan</a>
-<!-- v14 -->
+<!-- v15 -->
 </body>
 
 </html>
