@@ -7,9 +7,9 @@
   <title>Sayı Bulma Oyunu</title>
   <style>
     body {
-      font-family: 'Comic Sans MS', 'Comic Sans', 'Arial', 'Helvetica', cursive, sans-serif;
+      font-family: 'Comic Sans MS', 'Comic Sans', 'Arial', 'Helvetica', 'sans-serif';
       text-align: center;
-      margin-top: 50px;
+      margin-top: 30px;
       background-color: #f9f9f9;
     }
 
@@ -39,7 +39,7 @@
       grid-template-columns: repeat(3, 105px);
       grid-gap: 15px;
       justify-content: center;
-      margin: 20px auto;
+      margin: 10px; /*auto;*/
     }
 
     .grid div {
@@ -70,7 +70,7 @@
 
     .grid div:hover:not(.disabled) {
       transform: scale(1.2) !important;
-      font-size: 50px;
+      font-size: 60px;
       background: linear-gradient(145deg, #00DD00, #1f7a3a);
       box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.5),
         inset -5px -5px 10px rgba(0, 0, 0, 0.3),
@@ -80,7 +80,7 @@
 
     .grid div.correct {
       background: linear-gradient(145deg, #00DD00, #1f7a3a);
-      font-size: 50px;
+      font-size: 60px;
       transform: scale(1.2);
       cursor: default;
       animation: jump 0.5s ease-in-out;
@@ -97,7 +97,7 @@
     }
 
     .message {
-      margin-top: 20px;
+      margin-top: 5px; 
       font-size: 24px;
       font-weight: bold;
       color: #4caf50;
@@ -120,7 +120,7 @@
     }
 
     button {
-      margin-top: 20px;
+      margin-top: 10px;
       padding: 15px 30px;
       font-size: 20px;
       font-weight: bold;
@@ -146,7 +146,7 @@
     }
 
     #summary {
-      margin-top: 30px;
+      margin-top: 10px;
       font-size: 24px;
       color: #333;
       animation: slideIn 1s;
@@ -168,13 +168,13 @@
       display: flex;
       justify-content: center;
       gap: 10px;
-      margin-top: 20px;
+      margin-top: 10px;
     }
 
     .question {
-      font-size: 32px;
+      font-size: 28px;
       color: #333;
-      animation: fadeIn 1s;
+      animation: fadeIn 2s;
     }
 
     #restartButton:hover {
@@ -190,11 +190,11 @@
   <div class="question" id="question"></div>
   <div class="grid" id="grid"></div>
   <div class="message" id="message"></div>
+  <div id="summary"></div>
   <div class="button-container">
     <button id="nextButton" disabled>Sonraki Soru 🚀</button>
     <button id="restartButton" style="display: none;">Yeni Oyun 🔄</button>
   </div>
-  <div id="summary"></div>
 
   <script>
     let correctAnswers = 0;
@@ -218,7 +218,7 @@
 
       const numbers = Array.from({ length: 9 }, (_, i) => i + 1).sort(() => Math.random() - 0.5);
 
-      document.getElementById('question').innerText = `${questionCount + 1}- Aşağıdaki rakamlardan hangisi '${numberToWord(correctNumber)}'${getSuffix(correctNumber)} 🤔`;
+      document.getElementById('question').innerText = `${questionCount + 1}) Aşağıdaki rakamlardan hangisi '${numberToWord(correctNumber)}'${getSuffix(correctNumber)} 🤔`;
       document.getElementById('message').innerText = '';
       document.getElementById('nextButton').disabled = true;
       isAnswered = false;
@@ -253,6 +253,10 @@
         wrongAnswers++;
         div.classList.add('wrong');
       }
+      
+      if (questionCount === totalQuestions) {
+        showSummary();
+      }
 
       isAnswered = true;
       document.getElementById('nextButton').disabled = false;
@@ -262,9 +266,6 @@
         item.classList.add('disabled');
       });
 
-      if (questionCount === totalQuestions) {
-        showSummary();
-      }
     }
 
     function showSummary() {
@@ -280,10 +281,28 @@
 
       document.getElementById('summary').innerHTML = `
     <h2>Oyun Bitti! 🏆</h2>
-    <p>Soru Sayısı: ${totalQuestions}</p>
-    <p>Doğru Cevap Sayısı: ${correctAnswers}</p>
-    <p>Yanlış Cevap Sayısı: ${wrongAnswers}</p>
-    <p style="font-size: 32px; color: ${successRate >= 50 ? '#4caf50' : '#ff6f61'}; font-weight: bold;">Başarı Oranı: ${successRate.toFixed(2)}%</p>
+    <table style="width: 100%; max-width: 400px; margin: 5px auto; border-collapse: collapse; font-size: 20px;">
+      <tr>
+        <th style="padding: 5px; border: 1px solid #ccc; background-color: #f9f9f9;">Kategori</th>
+        <th style="padding: 5px; border: 1px solid #ccc; background-color: #f9f9f9;">Değer</th>
+      </tr>
+      <tr>
+        <td style="padding: 5px; border: 1px solid #ccc;">Soru Sayısı</td>
+        <td style="padding: 5px; border: 1px solid #ccc;">${totalQuestions}</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px; border: 1px solid #ccc;">Doğru Cevap Sayısı</td>
+        <td style="padding: 5px; border: 1px solid #ccc;">${correctAnswers}</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px; border: 1px solid #ccc;">Yanlış Cevap Sayısı</td>
+        <td style="padding: 5px; border: 1px solid #ccc;">${wrongAnswers}</td>
+      </tr>
+      <tr>
+        <td style="padding: 5px; border: 1px solid #ccc;">Başarı Oranı</td>
+        <td style="padding: 5px; border: 1px solid #ccc; color: ${successRate >= 50 ? '#4caf50' : '#ff6f61'}; font-weight: bold;">${successRate.toFixed(2)}%</td>
+      </tr>
+    </table>
     <p style="font-size: 24px; margin-top: 10px;">${message}</p>
   `;
       document.getElementById('nextButton').style.display = 'none';
@@ -316,9 +335,9 @@
 
     generateQuestion();
   </script>
-  <hr style="width:30%; height:1px; background-color:gray; border:none;">
-  <a style="font-size: 0.8em; text-decoration: none;" href="https://mesutakcan.blogspot.com">©2025 Mesut Akcan</a>
-  <!-- v21 -->
+  <hr style="width:25%; height:1px; background-color:gray; border:none; margin-top:20px">
+  <a style="font-size: 0.7em; text-decoration: none;" href="https://mesutakcan.blogspot.com">©2025 Mesut Akcan</a>
+  <!-- v22 -->
 </body>
 
 </html>
